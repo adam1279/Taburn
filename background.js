@@ -5,7 +5,7 @@
         }
     });
     var tabCount;
-    chrome.tabs.query({windowType:'normal'}, function(tabs) {
+    chrome.tabs.query({currentWindow: true}, function(tabs) {
         console.log('Number of open tabs in all normal browser windows:',tabs.length);
         tabCount = tabs.length;
     });
@@ -17,7 +17,7 @@
         });
     });
     chrome.tabs.onCreated.addListener(function(port, tab) {
-        chrome.tabs.query({windowType:'normal'}, function(tabs) {
+        chrome.tabs.query({currentWindow: true}, function(tabs) {
             console.log('Number of open tabs in all normal browser windows:',tabs.length);
             tabCount = tabs.length;
         }); 
@@ -32,7 +32,7 @@
         });
     });
     chrome.tabs.onRemoved.addListener(function(tabId, port) {
-        chrome.tabs.query({windowType:'normal'}, function(tabs) {
+        chrome.tabs.query({currentWindow: true}, function(tabs) {
             console.log('Number of open tabs in all normal browser windows:',tabs.length);
             tabCount = tabs.length;
         });
