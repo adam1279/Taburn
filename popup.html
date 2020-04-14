@@ -15,8 +15,21 @@
                 <td style='text-align: right;'><img src='Logos/LogoWhite.png' class="headerLogo burnAllButton" title='Burn All Unlocked Tabs'></td>
             </tr>
         </table>
-        <div class='main'>
-            <!--<div class='settingDiv'>
+        <table class='mainChanger'>
+            <tr>
+                <td>
+                    <img src='Left_arrow.png' class='headerLogo mainChangerLeft' style='height: 15px; transform: translateY(3px);'>
+                </td>
+                <td class='mainChangerHeader'>Tab Overview</td>
+                <td style='text-align: right;'>
+                    <img src='Right_arrow.png' class='headerLogo mainChangerRight' style='height: 15px; transform: translateY(3px);'>
+                </td>
+            </tr>
+        </table>
+        <div class='main tabOverview' data-title='Tab Overview'></div>
+        <div class='main' data-title='Window Settings'></div>
+        <div class='main' style='display: none;' data-title='Runtime Settings'>
+            <div class='settingDiv'>
                 <table>
                     <tr>
                         <td><span class='settingHeader'>Maximum amount of locked tabs</span></td>
@@ -46,8 +59,10 @@
                         </td>
                     </tr>
                 </table>
-            </div>-->
+            </div>
         </div>
+        
+        
         <div class='footerDiv'>
             Open Tabs: <div style='float: right;'><span class='tabCounter'></span> / <div class='limitInputCont'><input placeholder="10" class='limitInput limitInputStyle' type='number'><div class='containerDivider'></div><button class='limitInputButtonStyle limitInputButton'>Update</button></div></div>
         </div>
