@@ -1,7 +1,11 @@
     chrome.storage.sync.get(['tabLimit'], function(result) {
         if (result.tabLimit==undefined) {
-            console.log('cjieofwhg');
             chrome.storage.sync.set({'tabLimit': 10});
+        }
+    });
+    chrome.storage.sync.get(['currentMain'], function(result) {
+        if (result.tabLimit==undefined) {
+            chrome.storage.sync.set({'currentMain': 0});
         }
     });
     var tabCount;

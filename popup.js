@@ -160,11 +160,11 @@ chrome.storage.sync.get(['tabLimit'], function (result) {
         classes.lockedTabURLs[0].innerHTML = result6.lockedTabs;
     });*/
     function updatePopup() {
-        classes.main[0].innerHTML = '';
+        classes.tabOverview[0].innerHTML = '';
         chrome.storage.sync.get(['lockedTabs'], function (result7) {
             chrome.tabs.query({ currentWindow: true }, function (tabs) {
                 chrome.tabs.query({ active: true, currentWindow: true }, function (tabs2) {
-                    classes.main[0].innerHTML = '';
+                    classes.tabOverview[0].innerHTML = '';
                     console.log(tabs.length);
                     for (var i = 0; i < tabs.length; i++) {
                         active = '';
@@ -183,7 +183,7 @@ chrome.storage.sync.get(['tabLimit'], function (result) {
                         if (tabs2[0].id == tabs[i].id) {
                             active = " data-disabled='true'";
                         }
-                        classes.main[0].innerHTML += "<div class='settingDiv'><table><tr><td>" + (i + 1) + '. ' + tabs[i].title + "</td><td style='text-align: right; width: 30px;' data-index='" + i + "'><img src='Close.png' title='Close Tab' class='closeButtons' data-id='" + tabs[i].id + "'><img" + active + " title='" + lockTitle + " Tab' class='locks' data-url='" + tabs[i].url + "' src='" + lockState + "_gray.png' data-state='" + lockState + "'><img" + active + " src='Search.png' title='Find Tab' class='searchButtons' data-id='" + tabs[i].id + "'></td><tr></table></div>";
+                        classes.tabOverview[0].innerHTML += "<div class='settingDiv'><table><tr><td>" + (i + 1) + '. ' + tabs[i].title + "</td><td style='text-align: right; width: 30px;' data-index='" + i + "'><img src='Close.png' title='Close Tab' class='closeButtons' data-id='" + tabs[i].id + "'><img" + active + " title='" + lockTitle + " Tab' class='locks' data-url='" + tabs[i].url + "' src='" + lockState + "_gray.png' data-state='" + lockState + "'><img" + active + " src='Search.png' title='Find Tab' class='searchButtons' data-id='" + tabs[i].id + "'></td><tr></table></div>";
                     }
                     updateClasses();
                     Array.from(classes.locks).forEach(function (element) {
@@ -338,5 +338,37 @@ chrome.storage.sync.get(['tabLimit'], function (result) {
     });
     //classes.tabCountBar[0].style.background = 'linear-gradient(to right, green 50%, red 50%)';
     //classes.main[0].style.background = 'green';
-
+    chrome.storage.sync.get(['currentMain'], function(result10) {
+        currentMain = result10.currentMain;
+        for (var elem of classes.main) {
+            elem.style.display = 'none';
+        }
+        classes.main[currentMain].style.display = '';
+        classes.mainChangerHeader[0].innerHTML = classes.main[currentMain].getAttribute('data-title');
+        classes.mainChangerRight[0].addEventListener('click', function () {
+            classes.main[currentMain].style.display = 'none';
+            classes.main[currentMain].style.animationName = '';
+            currentMain += 1;
+            if (currentMain == classes.main.length) {
+                currentMain = 0;
+            }
+            classes.main[currentMain].style.display = '';
+            classes.mainChangerHeader[0].innerHTML = classes.main[currentMain].getAttribute('data-title');
+            console.log(currentMain);
+            chrome.storage.sync.set({'currentMain': currentMain});
+        });
+        classes.mainChangerLeft[0].addEventListener('click', function () {
+            classes.main[currentMain].style.display = 'none';
+            classes.main[currentMain].style.animationName = '';
+            currentMain -= 1;
+            if (currentMain < 0) {
+                currentMain = classes.main.length-1;
+            }
+            classes.main[currentMain].style.display = '';
+            classes.mainChangerHeader[0].innerHTML = classes.main[currentMain].getAttribute('data-title');
+            console.log(currentMain);
+            chrome.storage.sync.set({'currentMain': currentMain});
+        });
+    });
+    
 });
